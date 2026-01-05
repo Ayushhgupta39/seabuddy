@@ -50,9 +50,12 @@ router.post(
           if (clientDate > serverDate) {
             await db.update(moodLogs)
               .set({
-                ...log,
+                mood: log.mood,
+                intensity: log.intensity,
+                notes: log.notes,
                 tenantId,
                 userId,
+                clientCreatedAt: new Date(log.clientCreatedAt),
                 syncedAt: new Date(),
                 updatedAt: new Date(),
               })
@@ -61,9 +64,15 @@ router.post(
         } else {
           // Insert new record
           await db.insert(moodLogs).values({
-            ...log,
+            id: log.id,
+            mood: log.mood,
+            intensity: log.intensity,
+            notes: log.notes,
             tenantId,
             userId,
+            clientCreatedAt: new Date(log.clientCreatedAt),
+            createdAt: new Date(),
+            updatedAt: new Date(),
             syncedAt: new Date(),
           });
         }
@@ -84,9 +93,13 @@ router.post(
           if (clientDate > serverDate) {
             await db.update(journalEntries)
               .set({
-                ...entry,
+                title: entry.title,
+                content: entry.content,
+                mood: entry.mood,
+                isPrivate: entry.isPrivate,
                 tenantId,
                 userId,
+                clientCreatedAt: new Date(entry.clientCreatedAt),
                 syncedAt: new Date(),
                 updatedAt: new Date(),
               })
@@ -94,9 +107,16 @@ router.post(
           }
         } else {
           await db.insert(journalEntries).values({
-            ...entry,
+            id: entry.id,
+            title: entry.title,
+            content: entry.content,
+            mood: entry.mood,
+            isPrivate: entry.isPrivate,
             tenantId,
             userId,
+            clientCreatedAt: new Date(entry.clientCreatedAt),
+            createdAt: new Date(),
+            updatedAt: new Date(),
             syncedAt: new Date(),
           });
         }
@@ -117,9 +137,14 @@ router.post(
           if (clientDate > serverDate) {
             await db.update(checkIns)
               .set({
-                ...checkIn,
+                scheduledFor: new Date(checkIn.scheduledFor),
+                completedAt: checkIn.completedAt ? new Date(checkIn.completedAt) : null,
+                mood: checkIn.mood,
+                responses: checkIn.responses,
+                needsAttention: checkIn.needsAttention || false,
                 tenantId,
                 userId,
+                clientCreatedAt: new Date(checkIn.clientCreatedAt),
                 syncedAt: new Date(),
                 updatedAt: new Date(),
               })
@@ -127,9 +152,17 @@ router.post(
           }
         } else {
           await db.insert(checkIns).values({
-            ...checkIn,
+            id: checkIn.id,
+            scheduledFor: new Date(checkIn.scheduledFor),
+            completedAt: checkIn.completedAt ? new Date(checkIn.completedAt) : null,
+            mood: checkIn.mood,
+            responses: checkIn.responses,
+            needsAttention: checkIn.needsAttention || false,
             tenantId,
             userId,
+            clientCreatedAt: new Date(checkIn.clientCreatedAt),
+            createdAt: new Date(),
+            updatedAt: new Date(),
             syncedAt: new Date(),
           });
         }

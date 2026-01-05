@@ -30,9 +30,9 @@ export const tenantMiddleware = async (
     // req.userId = decoded.userId;
     // req.userRole = decoded.role;
 
-    // TEMPORARY: Hardcoded for development
-    req.tenantId = 'demo-tenant-id';
-    req.userId = 'demo-user-id';
+    // TEMPORARY: Hardcoded for development (actual UUIDs from database)
+    req.tenantId = 'c074ea25-2c5f-44b2-9aa6-6eaf7c2dbc0c';
+    req.userId = '5ba2e7df-e6e2-4e41-bf55-0e9b7ca4afd8';
     req.userRole = 'crew';
 
     next();

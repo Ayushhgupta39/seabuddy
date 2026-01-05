@@ -94,6 +94,8 @@ class SyncService {
         },
       };
 
+      console.log('📦 Sync request:', JSON.stringify(syncRequest, null, 2));
+
       const response = await api.sync(syncRequest);
 
       if (!response.success) {
@@ -116,6 +118,7 @@ class SyncService {
       return { success: true, message: 'Sync completed' };
     } catch (error: any) {
       console.error('❌ Sync failed:', error.message);
+      console.error('Error details:', error.response?.data || error);
       return { success: false, message: error.message };
     } finally {
       this.isSyncing = false;
